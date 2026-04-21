@@ -3,48 +3,72 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>INFORMATIKA KELAS A</title>
+    <title>Home - Informatika Kelas A</title>
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    <h1>WEB INFORMATIKA </h1>
-    <hr>
-  <table border="1" celspacing="0" cellpadding="10px">
-    <tr>
-        <td>
-            <a href="index.html">Home</a>
-        </td>
-         <td>
-            <a href="profile.html">Profile</a>
-        </td>
-        <td>
-            <a href="contact.html">Contact</a>
-        </td>
-        <td>
-            <a href="data-mahasiswa.html">Data Mahasiswa</a>
-        </td>
-    </tr>
+    <div class="container">
+        <header>
+            <h1>📘 WEB INFORMATIKA</h1>
+            <p>Program Studi Informatika - Kelas A</p>
+        </header>
 
-   
-</table>
-    <h2>Sambutan kaprodi </h2>
-    <img src="assets/images/kihajardewantara.jpg" alt="buah"  height="200px"/>
-   <p> 
-    <b>Nama:</b> M. Firmansyah, PDIP.<br><br>
+        <nav>
+            <ul>
+                <li><a href="index.html" class="active">🏠 Home</a></li>
+                <li><a href="profile.html">👤 Profile</a></li>
+                <li><a href="contact.html">📞 Contact</a></li>
+                <li><a href="data-mahasiswa.html">📊 Data Mahasiswa</a></li>
+            </ul>
+        </nav>
 
-    <b>Jabatan:</b> <i>Prosesor</i><br><br>
+        <main>
+            <div class="card">
+                <h2>Sambutan Kaprodi</h2>
+                <div class="profile-flex">
+                    <div class="profile-img">
+                        <img src="assets/images/kihajardewantara.jpg" alt="Kihajar Dewantara" style="width: 150px; height: auto; border-radius: 12px;">
+                    </div>
+                    <div class="profile-info">
+                        <p><strong>Nama:</strong> M. Firmansyah, PDIP.</p>
+                        <p><strong>Jabatan:</strong> <i>Profesor</i></p>
+                        <div class="sambutan">
+                            <p><strong>Sambutan:</strong></p>
+                            <p>Selamat datang di Prodi Informatika, semoga kita bisa belajar dengan baik dan sukses selalu untuk kita semua.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-    <b>Sambutan:</b><br>
-    Selamat datang di Prodi Informatika, semoga kita bisa belajar dengan baik dan sukses selalu untuk kita semua.
-</p>
-</h3>daftar publikasi</h3>
-    <ul>
-        <li>scopus</li>
-        <ul>
-            <li>sentimen analysis</li>
-        
-        </ul>
-        <li>WOS</li>
-        <li>sinta</li> 
-    </ul>
+            <div class="card">
+                <h3>📚 Daftar Publikasi</h3>
+                <ul class="publikasi-list">
+                    <li>Scopus
+                        <ul>
+                            <li>Sentimen Analysis</li>
+                            <li>Deep Learning untuk Klasifikasi Citra</li>
+                        </ul>
+                    </li>
+                    <li>WOS
+                        <ul>
+                            <li>Big Data Analytics</li>
+                        </ul>
+                    </li>
+                    <li>Sinta
+                        <ul>
+                            <li>Sistem Informasi Akademik</li>
+                            <li>Pengembangan E-Learning</li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </main>
+
+        <footer>
+            <p>&copy; 2025 Prodi Informatika - Universitas Teknologi Nusantara</p>
+        </footer>
+    </div>
+
+    <script src="js/script.js"></script>
 </body>
 </html>
