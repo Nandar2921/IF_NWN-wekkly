@@ -3,24 +3,44 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Tambah Data Mahasiswa</title>
 </head>
 <body>
-    <h2>tambah data mahasiswa</h2>
-    <form>
-        <table>
+    <h2>Tambah Data Mahasiswa</h2>
+
+    <form action="mahasiswa.html" method="post">
+        <table border="1" cellpadding="5">
             <tr>
-                <td><label for="nama">nama</label></td>
-                <td>:</td>
-                <td><input type="text" name="nama" id="nama"/></td>
+                <td><label for="nama">Nama</label></td>
+                <td><input type="text" name="nama" id="nama"></td>
             </tr>
-             <tr>
-                <td><label for="nim">nim</label></td>
-                <td>:</td>
-                <td><input type="text" name="nim" id="nim"/></td>
+            <tr>
+                <td><label for="nim">NIM</label></td>
+                <td><input type="number" name="nim" id="nim"></td>
+            </tr>
+            <tr>
+                <td><label for="foto">Foto</label></td>
+                <td><input type="file" name="foto" id="foto"></td>
+            </tr>
+            <tr>
+                <td><label for="uts">UTS</label></td>
+                <td><input type="number" name="uts" id="uts"></td>
+            </tr>
+            <tr>
+                <td><label for="uas">UAS</label></td>
+                <td><input type="number" name="uas" id="uas"></td>
+            </tr>
+            <tr>
+                <td><label for="tugas">TUGAS</label></td>
+                <td><input type="number" name="tugas" id="tugas"></td>
+            </tr>
+            <tr>
+                <td colspan="2" align="center">
+                    <button type="submit">Tambah data</button>
+                </td>
             </tr>
         </table>
-        <button type="submit" name="submit" id="submit">tambah data</button>
     </form>
+
 </body>
 </html>
