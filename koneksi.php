@@ -6,6 +6,4 @@ $conn = mysqli_connect('localhost', 'root', 'root', 'ifnwn-wekkly');
 if (!$conn) {
     die("Koneksi gagal: " . mysqli_connect_error());
 }
-
-
 ?>
