@@ -1,3 +1,15 @@
+<?php
+// ============================================
+// FILE: index.php
+// FUNGSI: Halaman utama / Homepage
+// ============================================
+
+require 'fungsi.php';
+
+// Ambil data untuk statistik
+$total_mahasiswa = hitungdata('mahasiswa');
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -15,19 +27,21 @@
             <p>Program Studi Teknik Informatika</p>
         </div>
         
+        <!-- NAVIGASI -->
         <div class="navbar">
             <a href="index.php"><i class="fas fa-home"></i> Home</a>
             <a href="profile.php"><i class="fas fa-user-graduate"></i> Profile</a>
             <a href="contact.php"><i class="fas fa-envelope"></i> Contact</a>
-            <a href="data-mahasiswa.php"><i class="fas fa-table"></i> Data Mahasiswa</a>
+            <a href="mahasiswa.php"><i class="fas fa-table"></i> Data Mahasiswa</a>
         </div>
         
         <div class="content">
+            <!-- WELCOME CARD -->
             <div class="welcome-card">
                 <div class="welcome-text">
                     <h2><i class="fas fa-hand-wave"></i> Selamat Datang</h2>
                     <p>Website resmi Program Studi Teknik Informatika. Temukan informasi terbaru tentang kegiatan akademik, penelitian, dan pengembangan mahasiswa.</p>
-                    <a href="data-mahasiswa.php" class="btn btn-primary" style="margin-top: 20px;">
+                    <a href="mahasiswa.php" class="btn btn-primary" style="margin-top: 20px;">
                         <i class="fas fa-users"></i> Lihat Data Mahasiswa
                     </a>
                 </div>
@@ -36,11 +50,12 @@
                 </div>
             </div>
             
+            <!-- STATISTIK -->
             <div class="stats-grid">
                 <div class="stat-mini">
                     <i class="fas fa-user-graduate"></i>
                     <div>
-                        <h3>120+</h3>
+                        <h3><?= $total_mahasiswa; ?>+</h3>
                         <p>Mahasiswa Aktif</p>
                     </div>
                 </div>
@@ -67,6 +82,7 @@
                 </div>
             </div>
             
+            <!-- SAMBUTAN KAPRODI -->
             <div class="card">
                 <h2><i class="fas fa-chalkboard-user"></i> Sambutan Kaprodi</h2>
                 <div class="profile-section">
@@ -82,6 +98,7 @@
                 </div>
             </div>
             
+            <!-- PUBLIKASI -->
             <div class="card">
                 <h2><i class="fas fa-scroll"></i> Publikasi Terbaru</h2>
                 <div class="publication-list">

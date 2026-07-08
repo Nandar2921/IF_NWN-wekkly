@@ -1,20 +1,34 @@
 <?php
-include 'koneksi.php';
+// ============================================
+// FILE: mahasiswa.php
+// FUNGSI: Menampilkan data mahasiswa (Admin Only)
+// ============================================
+
+session_start();
+require 'fungsi.php';
+
+// Cek login
+if (!isset($_SESSION['login']) || $_SESSION['login'] !== true) {
+    header("Location: login.php");
+    exit;
+}
+
+// Hanya admin yang bisa akses
+if ($_SESSION['role'] !== 'admin') {
+    header("Location: dashboard.php");
+    exit;
+}
+
+// Ambil semua data mahasiswa
+$mahasiswas = tampildata("SELECT * FROM mahasiswa");
 
 // Hitung statistik
-$total_mahasiswa = mysqli_num_rows(mysqli_query($conn, "SELECT * FROM mahasiswa"));
-$total_informatika = mysqli_num_rows(mysqli_query($conn, "SELECT * FROM mahasiswa WHERE jurusan = 'Informatika'"));
-$total_si = mysqli_num_rows(mysqli_query($conn, "SELECT * FROM mahasiswa WHERE jurusan = 'Sistem Informasi'"));
-$total_tk = mysqli_num_rows(mysqli_query($conn, "SELECT * FROM mahasiswa WHERE jurusan = 'Teknik Komputer'"));
-
-$search = isset($_GET['search']) ? $_GET['search'] : '';
-if ($search) {
-    $query = "SELECT * FROM mahasiswa WHERE nama LIKE '%$search%' OR nim LIKE '%$search%' OR jurusan LIKE '%$search%'";
-} else {
-    $query = "SELECT * FROM mahasiswa";
-}
-$data = mysqli_query($conn, $query);
+$total_mahasiswa = hitungdata('mahasiswa');
+$total_informatika = hitungperjurusan('Informatika');
+$total_si = hitungperjurusan('Sistem Informasi');
+$total_tk = hitungperjurusan('Teknik Komputer');
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -32,15 +46,18 @@ $data = mysqli_query($conn, $query);
             <p>Manajemen Data Mahasiswa Informatika</p>
         </div>
         
+        <!-- NAVIGASI -->
         <div class="navbar">
             <a href="index.php"><i class="fas fa-home"></i> Home</a>
             <a href="profile.php"><i class="fas fa-user-graduate"></i> Profile</a>
             <a href="contact.php"><i class="fas fa-envelope"></i> Contact</a>
-            <a href="data-mahasiswa.php"><i class="fas fa-table"></i> Data Mahasiswa</a>
+            <a href="mahasiswa.php"><i class="fas fa-table"></i> Data Mahasiswa</a>
+            <a href="dashboard.php"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+            <a href="logout.php" style="background: rgba(239,68,68,0.3);"><i class="fas fa-sign-out-alt"></i> Logout</a>
         </div>
         
         <div class="content">
-            <!-- Statistics Cards -->
+            <!-- STATISTIK CARD -->
             <div class="stats-container">
                 <div class="stat-card" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
                     <i class="fas fa-users" style="font-size: 2.5em; margin-bottom: 10px;"></i>
@@ -64,6 +81,7 @@ $data = mysqli_query($conn, $query);
                 </div>
             </div>
             
+            <!-- TOOLBAR -->
             <div class="toolbar">
                 <a href="inputdata.php" class="btn btn-primary">
                     <i class="fas fa-plus"></i> Tambah Data
@@ -71,7 +89,7 @@ $data = mysqli_query($conn, $query);
                 <div style="display: flex; gap: 10px;">
                     <div class="search-wrapper">
                         <i class="fas fa-search search-icon"></i>
-                        <input type="text" id="searchInput" class="search-box" placeholder="Cari nama, nim, atau jurusan..." onkeyup="searchData()">
+                        <input type="text" id="searchInput" class="search-box" placeholder="Cari data..." onkeyup="searchData()">
                     </div>
                     <button onclick="exportToCSV()" class="btn btn-primary">
                         <i class="fas fa-download"></i> Export CSV
@@ -79,12 +97,14 @@ $data = mysqli_query($conn, $query);
                 </div>
             </div>
             
+            <!-- ALERT SUKSES -->
             <?php if (isset($_GET['success'])): ?>
                 <div class="alert alert-success">
                     <i class="fas fa-check-circle"></i> <?= htmlspecialchars($_GET['success']) ?>
                 </div>
             <?php endif; ?>
             
+            <!-- TABEL DATA -->
             <div class="table-wrapper">
                 <table class="data-table" id="dataTable">
                     <thead>
@@ -101,96 +121,42 @@ $data = mysqli_query($conn, $query);
                     </thead>
                     <tbody>
                         <?php $no = 1; ?>
-                        <?php while($row = mysqli_fetch_assoc($data)) : ?>
+                        <?php foreach ($mahasiswas as $mhs) : ?>
                         <tr>
                             <td data-label="No"><?= $no++; ?></td>
                             <td data-label="Foto">
-                                <?php if ($row['foto'] && file_exists("assets/images/" . $row['foto'])): ?>
-                                    <img src="assets/images/<?= $row['foto']; ?>" class="foto-mahasiswa" alt="Foto">
+                                <?php if ($mhs['foto'] && file_exists("assets/images/" . $mhs['foto'])): ?>
+                                    <img src="assets/images/<?= $mhs['foto']; ?>" class="foto-mahasiswa" alt="Foto">
                                 <?php else: ?>
                                     <img src="assets/images/default.png" class="foto-mahasiswa" alt="No Image">
                                 <?php endif; ?>
                             </td>
-                            <td data-label="Nama"><strong><?= htmlspecialchars($row['nama']); ?></strong></td>
-                            <td data-label="NIM"><code><?= htmlspecialchars($row['nim']); ?></code></td>
+                            <td data-label="Nama"><strong><?= htmlspecialchars($mhs['nama']); ?></strong></td>
+                            <td data-label="NIM"><code><?= htmlspecialchars($mhs['nim']); ?></code></td>
                             <td data-label="Jurusan">
-                                <span class="badge jurusan-<?= strtolower(str_replace(' ', '', $row['jurusan'])); ?>">
-                                    <?= htmlspecialchars($row['jurusan']); ?>
+                                <span class="badge jurusan-<?= strtolower(str_replace(' ', '', $mhs['jurusan'])); ?>">
+                                    <?= htmlspecialchars($mhs['jurusan']); ?>
                                 </span>
                             </td>
-                            <td data-label="Email"><i class="fas fa-envelope"></i> <?= htmlspecialchars($row['email']); ?></td>
-                            <td data-label="No. HP"><i class="fas fa-phone"></i> <?= htmlspecialchars($row['no_hp']); ?></td>
+                            <td data-label="Email"><i class="fas fa-envelope"></i> <?= htmlspecialchars($mhs['email']); ?></td>
+                            <td data-label="No. HP"><i class="fas fa-phone"></i> <?= htmlspecialchars($mhs['no_hp']); ?></td>
                             <td data-label="Aksi" class="action-buttons">
-                                <a href="edit.php?id=<?= $row['id']; ?>" class="btn btn-edit">
+                                <a href="editdata.php?id=<?= $mhs['id']; ?>" class="btn btn-edit">
                                     <i class="fas fa-edit"></i> Edit
                                 </a>
-                                <a href="hapus.php?id=<?= $row['id']; ?>" class="btn btn-delete" onclick="return confirm('Yakin ingin menghapus data ini?')">
+                                <a href="hapusdata.php?id=<?= $mhs['id']; ?>" class="btn btn-delete" onclick="return confirm('Yakin ingin menghapus data ini?')">
                                     <i class="fas fa-trash"></i> Hapus
                                 </a>
                             </td>
                         </tr>
-                        <?php endwhile; ?>
+                        <?php endforeach; ?>
                     </tbody>
                 </table>
             </div>
             
-            <?php if (mysqli_num_rows($data) == 0): ?>
+            <?php if (count($mahasiswas) == 0): ?>
                 <div class="alert alert-error" style="text-align: center;">
                     <i class="fas fa-exclamation-triangle"></i> Tidak ada data mahasiswa. Silakan tambah data!
                 </div>
             <?php endif; ?>
-        </div>
-    </div>
-    
-    <script src="script.js"></script>
-    <script>
-        function searchData() {
-            const input = document.getElementById('searchInput');
-            const filter = input.value.toUpperCase();
-            const table = document.getElementById('dataTable');
-            const rows = table.getElementsByTagName('tr');
-            
-            for (let i = 1; i < rows.length; i++) {
-                const cells = rows[i].getElementsByTagName('td');
-                let found = false;
-                for (let j = 2; j < cells.length - 1; j++) {
-                    if (cells[j] && cells[j].textContent.toUpperCase().indexOf(filter) > -1) {
-                        found = true;
-                        break;
-                    }
-                }
-                rows[i].style.display = found ? '' : 'none';
-            }
-        }
-        
-        function exportToCSV() {
-            const table = document.getElementById('dataTable');
-            const rows = table.querySelectorAll('tr');
-            let csv = [];
-            rows.forEach(row => {
-                const cells = row.querySelectorAll('th, td');
-                const rowData = [];
-                cells.forEach((cell, index) => {
-                    if (index !== 1) {
-                        let text = cell.innerText.replace(/"/g, '""');
-                        if (text !== 'Edit' && text !== 'Hapus' && !text.includes('✏️') && !text.includes('🗑️')) {
-                            rowData.push('"' + text + '"');
-                        }
-                    }
-                });
-                if (rowData.length > 0) {
-                    csv.push(rowData.join(','));
-                }
-            });
-            const blob = new Blob([csv.join('\n')], { type: 'text/csv;charset=utf-8;' });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = 'data-mahasiswa-' + new Date().toISOString().slice(0,19) + '.csv';
-            a.click();
-            URL.revokeObjectURL(url);
-            alert('✅ Data berhasil diexport ke CSV!');
-        }
-    </script>
-</body>
-</html>
+        </div

@@ -1,3 +1,12 @@
+<?php
+// ============================================
+// FILE: contact.php
+// FUNGSI: Halaman kontak
+// ============================================
+
+require 'fungsi.php';
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -15,14 +24,16 @@
             <p>Hubungi kami melalui informasi di bawah ini</p>
         </div>
         
+        <!-- NAVIGASI -->
         <div class="navbar">
             <a href="index.php"><i class="fas fa-home"></i> Home</a>
             <a href="profile.php"><i class="fas fa-user-graduate"></i> Profile</a>
             <a href="contact.php"><i class="fas fa-envelope"></i> Contact</a>
-            <a href="data-mahasiswa.php"><i class="fas fa-table"></i> Data Mahasiswa</a>
+            <a href="mahasiswa.php"><i class="fas fa-table"></i> Data Mahasiswa</a>
         </div>
         
         <div class="content">
+            <!-- CONTACT INFO -->
             <div class="contact-grid">
                 <div class="card contact-info">
                     <h2><i class="fas fa-map-marker-alt"></i> Alamat</h2>
@@ -38,6 +49,7 @@
                 </div>
             </div>
             
+            <!-- MEDIA SOSIAL -->
             <div class="card">
                 <h2><i class="fas fa-share-alt"></i> Media Sosial</h2>
                 <div class="social-grid">
@@ -72,6 +84,7 @@
                 </div>
             </div>
             
+            <!-- MAP -->
             <div class="map-card">
                 <h2><i class="fas fa-map"></i> Lokasi Kami</h2>
                 <div class="map-placeholder">

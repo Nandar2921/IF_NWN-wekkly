@@ -1,3 +1,12 @@
+<?php
+// ============================================
+// FILE: profile.php
+// FUNGSI: Halaman profil prodi
+// ============================================
+
+require 'fungsi.php';
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -15,14 +24,16 @@
             <p>Program Studi Teknik Informatika</p>
         </div>
         
+        <!-- NAVIGASI -->
         <div class="navbar">
             <a href="index.php"><i class="fas fa-home"></i> Home</a>
             <a href="profile.php"><i class="fas fa-user-graduate"></i> Profile</a>
             <a href="contact.php"><i class="fas fa-envelope"></i> Contact</a>
-            <a href="data-mahasiswa.php"><i class="fas fa-table"></i> Data Mahasiswa</a>
+            <a href="mahasiswa.php"><i class="fas fa-table"></i> Data Mahasiswa</a>
         </div>
         
         <div class="content">
+            <!-- PROFILE HERO -->
             <div class="profile-hero">
                 <div class="hero-icon">
                     <i class="fas fa-university"></i>
@@ -33,11 +44,13 @@
                 </div>
             </div>
             
+            <!-- TENTANG KAMI -->
             <div class="card">
                 <h2><i class="fas fa-info-circle"></i> Tentang Kami</h2>
                 <p>Program Studi Informatika adalah program studi yang mempelajari tentang ilmu komputer, pemrograman, jaringan, keamanan siber, kecerdasan buatan, dan pengembangan sistem informasi. Kami berkomitmen untuk menghasilkan lulusan yang kompeten, inovatif, dan siap bersaing di era digital 4.0.</p>
             </div>
             
+            <!-- VISI & MISI -->
             <div class="vision-mission">
                 <div class="card vision">
                     <i class="fas fa-eye"></i>
@@ -56,6 +69,7 @@
                 </div>
             </div>
             
+            <!-- TUJUAN -->
             <div class="card">
                 <h2><i class="fas fa-chart-line"></i> Tujuan Program Studi</h2>
                 <div class="goals-grid">
